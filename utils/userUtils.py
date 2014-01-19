@@ -1,7 +1,7 @@
 __author__ = 'adam'
 
 
-class User ( object ):
+class User(object):
     def __init__(self):
         self.__title = ""
         self.__forename = ""
@@ -15,20 +15,133 @@ class User ( object ):
         self.__postcode = ""
 
     def set_title(self, user_title):
+        """
+
+        @param user_title: Title of the user, ie Mr, Mrs etc..
+        """
         self.__title = user_title
 
+    def get_title(self):
+        """
 
 
-title = "Mr"
-firstName = "Adam"
-secondName = "Davis"
-email = "davisadam10@googlemail.com"
-phoneNum = 07756134612
-address1 = "69 Albury Road"
-address2 = "Merstham"
-city = "Redhill"
-county = "Surrey"
-postcode = "RH1 3LP"
+        @return: The title of the user
+        """
+        return self.__title
+
+    def set_forename(self, forename):
+        """
+
+        @param forename: The users first name
+        """
+        self.__forename = forename
+
+    def get_forename(self):
+        return self.__forename
+
+    def set_surname(self, surname):
+        """
+
+        @param surname: The users family name
+        """
+        self.__surname = surname
+
+    def get_surname(self):
+        """
+
+
+        @return:
+        """
+        return self.__surname
+
+    def set_email(self, email):
+        self.__email = email
+
+    def get_email(self):
+        """
+
+
+        @return:
+        """
+        return self.__email
+
+    def set_phone_number(self, phone_number):
+        """
+
+        @param phone_number:
+        """
+        self.__phoneNum = phone_number
+
+    def get_phone_number(self):
+        """
+
+
+        @return:
+        """
+        return self.__phoneNum
+
+    def set_address1(self, address):
+        """
+
+        @param address:
+        """
+        self.__address1 = address
+
+    def get_address1(self):
+        """
+
+
+        @return:
+        """
+        return self.__address1
+
+    def set_address2(self, address):
+        """
+
+        @param address:
+        """
+        self.__address2 = address
+
+    def get_address2(self):
+        """
+
+
+        @return:
+        """
+        return self.__address2
+
+    def set_city(self, city):
+        self.__city = city
+
+    def get_city(self):
+        """
+
+
+        @return:
+        """
+        return self.__city
+
+    def set_postcode(self, postcode):
+        """
+
+        @param postcode:
+        """
+        self.__postcode = postcode
+
+    def get_postcode(self):
+        """
+
+
+        @return:
+        """
+        return self.__postcode
+
+
+
+
+
+
+
 ticket_type_1 = "monthly"
 cost = 285.70
 day = 13
