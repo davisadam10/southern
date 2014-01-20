@@ -13,6 +13,7 @@ class User(object):
         self.__city = ""
         self.__county = ""
         self.__postcode = ""
+        self.__photocard_id = ""
 
     def set_title(self, user_title):
         """
@@ -121,6 +122,21 @@ class User(object):
         """
         return self.__city
 
+    def set_county(self, county):
+        """
+
+        @param county:
+        """
+        self.__county = county
+
+    def get_county(self):
+        """
+
+
+        @return:
+        """
+        return self.__county
+
     def set_postcode(self, postcode):
         """
 
@@ -136,6 +152,21 @@ class User(object):
         """
         return self.__postcode
 
+    def set_photocard_id(self, photocard_id):
+        """
+
+        @param photocard_id:
+        """
+        self.__photocard_id = photocard_id
+
+    def get_photocard_id(self):
+        """
+
+
+        @return:
+        """
+        return self.__photocard_id
+
 
 
 
@@ -144,6 +175,11 @@ class User(object):
 
 ticket_type_1 = "monthly"
 cost = 285.70
+
+
+arrivingStation = "Merstham"
+departingStation = "London Victoria"
+
 day = 13
 month = str(01).zfill(2)
 year = 2014
@@ -154,8 +190,6 @@ arivingTime = 19.53
 delay = "60-119 mins"
 delayReason = "Delayed departure"
 
-arrivingStation = "Merstham"
-departingStation = "London Victoria"
 
 compensation = "National Rail Vouchers"
 
