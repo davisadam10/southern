@@ -3,7 +3,6 @@ __author__ = 'adam'
 
 from unittest import TestCase
 from nose.tools import *
-import utils.userUtils as userUtils
 import utils.journeyUtils as journeyUtils
 
 
