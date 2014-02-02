@@ -10,24 +10,28 @@ address2 = "Merstham"
 city = "Redhill"
 county = "Surrey"
 postcode = "RH1 3LP"
+photocard_id = "MJD2214"
+
 ticket_type_1 = "monthly"
 cost = 285.70
 day = 13
 month = str(01).zfill(2)
 year = 2014
 
+
+arrivingStation = "Merstham"
+departingStation = "London Victoria"
 startTime = 19.10
 arivingTime = 19.53
 
 delay = "60-119 mins"
 delayReason = "Delayed departure"
 
-arrivingStation = "Merstham"
-departingStation = "London Victoria"
+
 
 compensation = "National Rail Vouchers"
 
-photocard_id = "MJD2214"
+
 
 
 
