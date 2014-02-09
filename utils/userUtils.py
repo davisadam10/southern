@@ -1,4 +1,5 @@
 __author__ = 'adam'
+import pickle
 
 
 class User(object):
@@ -167,10 +168,24 @@ class User(object):
         """
         return self.__photocard_id
 
+    def save(self, file_path):
+        """
+
+        :param file_path: the file path we wish to save too
+        :return: the file path saved out
+        """
+        tmp_file = open(file_path, "w")
+        pickle.dump(self, tmp_file)
+        tmp_file.close()
+        return file_path
 
 
 
 
+
+
+
+'''
 
 
 ticket_type_1 = "monthly"
@@ -194,3 +209,5 @@ delayReason = "Delayed departure"
 compensation = "National Rail Vouchers"
 
 photocard_id = "MJD2214"
+
+    '''
