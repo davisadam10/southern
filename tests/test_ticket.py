@@ -4,6 +4,7 @@ __author__ = 'adam'
 from unittest import TestCase
 from nose.tools import *
 import datetime
+import tempfile
 import southern.utils.ticketUtils as ticketUtils
 
 
@@ -52,3 +53,13 @@ class test_Ticket(TestCase):
         ),
             result
         )
+
+    def test_save(self):
+        tmp_file = tempfile.NamedTemporaryFile('w').name
+
+        self.ticket.set_ticket_type('monthly')
+        self.ticket.set_ticket_cost(285.70)
+        self.ticket.set_ticket_start_date(03,02,2014)
+        self.ticket.set_ticket_end_date(02,03,2014)
+        self.ticket.set_ticket_photo_path('/home/adam/Downloads/feb_2014_ticket.JPG')
+        self.ticket.save(tmp_file)

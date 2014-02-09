@@ -3,7 +3,7 @@ import mechanize
 
 
 def loadUser(file_path):
-
+    pass
 
 def get_browser():
     br = mechanize.Browser()

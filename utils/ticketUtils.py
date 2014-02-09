@@ -37,7 +37,7 @@ class Ticket(SouthernBase):
     def set_ticket_photo_path(self, path):
         if not os.path.exists(path):
             raise OSError("File Path to your photo does not exist")
-        if not path.endswith('.jpg') or not path.endswith('jpeg'):
+        if not path.lower().endswith('.jpg') and not path.lower().endswith('jpeg'):
             raise OSError("File type needs to be JPG")
         self.__ticket_photo_path = path
 
@@ -82,8 +82,29 @@ class Ticket(SouthernBase):
             valid = False
             errors.append('Ticket: photo path not set')
 
-        #todo
-        #self.__ticket_expire_date = None
+        if not self.__ticket_start_day:
+            valid = False
+            errors.append('Ticket: start day not set')
+
+        if not self.__ticket_start_month:
+            valid = False
+            errors.append('Ticket: start month not set')
+
+        if not self.__ticket_start_year:
+            valid = False
+            errors.append('Ticket: start year not set')
+
+        if not self.__ticket_expire_day:
+            valid = False
+            errors.append('Ticket: expire day not set')
+
+        if not self.__ticket_expire_month:
+            valid = False
+            errors.append('Ticket: expire month not set')
+
+        if not self.__ticket_expire_year:
+            valid = False
+            errors.append('Ticket: expire year not set')
 
         return valid, errors
 
