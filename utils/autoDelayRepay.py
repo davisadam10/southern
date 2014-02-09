@@ -1,4 +1,5 @@
 import mechanize
+'''
 
 title = "Mr"
 firstName = "Adam"
@@ -94,3 +95,4 @@ text = response.read()
 tempFile = open("/home/adam/temp.html", "w")
 tempFile.write(text)
 tempFile.close()
+'''

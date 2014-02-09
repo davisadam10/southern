@@ -58,3 +58,22 @@ class test_Journey(TestCase):
         result = self.journey.get_delay_reason()
         self.assertEquals(result, delay_reason)
 
+    def test_day(self):
+        day = 1
+        self.journey.set_day(day)
+        result = self.journey.get_day()
+        self.assertEquals(day, result)
+
+    def test_month(self):
+        month = 1
+        self.journey.set_month(month)
+        result = self.journey.get_month()
+        self.assertEquals(result, month)
+
+    def test_year(self):
+        year = 2014
+        self.journey.set_year(year)
+        result = self.journey.get_year()
+        self.assertEquals(result, year)
+
+

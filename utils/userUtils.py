@@ -19,7 +19,7 @@ class User(object):
     def set_title(self, user_title):
         """
 
-        @param user_title: Title of the user, ie Mr, Mrs etc..
+        :param user_title: Title of the user, ie Mr, Mrs etc..
         """
         self.__title = user_title
 
@@ -27,14 +27,14 @@ class User(object):
         """
 
 
-        @return: The title of the user
+        :return: The title of the user
         """
         return self.__title
 
     def set_forename(self, forename):
         """
 
-        @param forename: The users first name
+        :param forename: The users first name
         """
         self.__forename = forename
 
@@ -44,7 +44,7 @@ class User(object):
     def set_surname(self, surname):
         """
 
-        @param surname: The users family name
+        :param surname: The users family name
         """
         self.__surname = surname
 
@@ -52,7 +52,7 @@ class User(object):
         """
 
 
-        @return:
+        :return:
         """
         return self.__surname
 
@@ -63,14 +63,14 @@ class User(object):
         """
 
 
-        @return:
+        :return:
         """
         return self.__email
 
     def set_phone_number(self, phone_number):
         """
 
-        @param phone_number:
+        :param phone_number:
         """
         self.__phoneNum = phone_number
 
@@ -78,14 +78,14 @@ class User(object):
         """
 
 
-        @return:
+        :return:
         """
         return self.__phoneNum
 
     def set_address1(self, address):
         """
 
-        @param address:
+        :param address:
         """
         self.__address1 = address
 
@@ -93,14 +93,14 @@ class User(object):
         """
 
 
-        @return:
+        :return:
         """
         return self.__address1
 
     def set_address2(self, address):
         """
 
-        @param address:
+        :param address:
         """
         self.__address2 = address
 
@@ -108,7 +108,7 @@ class User(object):
         """
 
 
-        @return:
+        :return:
         """
         return self.__address2
 
@@ -119,14 +119,14 @@ class User(object):
         """
 
 
-        @return:
+        :return:
         """
         return self.__city
 
     def set_county(self, county):
         """
 
-        @param county:
+        :param county:
         """
         self.__county = county
 
@@ -134,14 +134,14 @@ class User(object):
         """
 
 
-        @return:
+        :return:
         """
         return self.__county
 
     def set_postcode(self, postcode):
         """
 
-        @param postcode:
+        :param postcode:
         """
         self.__postcode = postcode
 
@@ -149,14 +149,14 @@ class User(object):
         """
 
 
-        @return:
+        :return: the post code of the user
         """
         return self.__postcode
 
     def set_photocard_id(self, photocard_id):
         """
 
-        @param photocard_id:
+        :param photocard_id: the photocard id of the user
         """
         self.__photocard_id = photocard_id
 
@@ -164,7 +164,7 @@ class User(object):
         """
 
 
-        @return:
+        :return: the photocard id of the user
         """
         return self.__photocard_id
 
