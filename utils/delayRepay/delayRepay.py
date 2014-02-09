@@ -1,5 +1,5 @@
 __author__ = 'adam'
-
+import mechanize
 
 def get_browser():
     br = mechanize.Browser()
@@ -13,52 +13,54 @@ def complete_form( browser, user, journey, ticket):
     for form in browser.forms():
         forms.append(form)
 
-    mainForm = forms[4]
+    main_form = forms[4]
 
-    mainForm['title'] = [user.get_title(),]
-    mainForm['forename'] = user.get_forename()
-    mainForm['surname'] = user.get_surname()
-    mainForm['email'] = user.get_email()
-    mainForm['email_confirmation'] = user.get_email()
-    mainForm['phone'] = str(user.get_phone_number())
-    mainForm['address1'] = user.get_address1()
-    mainForm['address2'] = user.get_address2()
-    mainForm['city'] = user.get_city()
-    mainForm['county'] = user.get_county()
-    mainForm['postcode'] = user.get_county()
+    main_form['title'] = [user.get_title(), ]
+    main_form['forename'] = user.get_forename()
+    main_form['surname'] = user.get_surname()
+    main_form['email'] = user.get_email()
+    main_form['email_confirmation'] = user.get_email()
+    main_form['phone'] = str(user.get_phone_number())
+    main_form['address1'] = user.get_address1()
+    main_form['address2'] = user.get_address2()
+    main_form['city'] = user.get_city()
+    main_form['county'] = user.get_county()
+    main_form['postcode'] = user.get_county()
 
-    mainForm['ticket_type_1'] = [ticket.get_ticket_type(),]
+    main_form['ticket_type_1'] = [ticket.get_ticket_type(), ]
 
     pounds, pence = str(ticket.get_ticket_cost()).split('.')
-    mainForm['cost_pounds_1'] = pounds
-    mainForm['cost_pence_1'] = pence
+    main_form['cost_pounds_1'] = pounds
+    main_form['cost_pence_1'] = pence
 
-    mainForm['journey_date_day_1'] = [str(day),]
-    mainForm['journey_date_month_1'] = [month,]
-    mainForm['journey_date_year_1'] = [str(year),]
+    main_form['journey_date_day_1'] = [str(journey.get_day()), ]
+    main_form['journey_date_month_1'] = [journey.get_month(), ]
+    main_form['journey_date_year_1'] = [str(journey.get_year()), ]
 
-    mainForm['scheduleddeparturehours_1'] = [str(startTime).split('.')[0].zfill(2),]
-    mainForm['scheduleddeparturemins_1'] = [str(startTime).split('.')[1].zfill(2),]
+    main_form['scheduleddeparturehours_1'] = [str(journey.get_start_time_hour()).zfill(2), ]
+    main_form['scheduleddeparturemins_1'] = [str(journey.get_start_time_min()).zfill(2), ]
 
-    mainForm['scheduledarrivalhours_1'] = [str(arivingTime).split('.')[0].zfill(2),]
-    mainForm['scheduledarrivalmins_1'] = [str(arivingTime).split('.')[1].zfill(2),]
+    main_form['scheduledarrivalhours_1'] = [str(journey.get_end_time_hour()).zfill(2), ]
+    main_form['scheduledarrivalmins_1'] = [str(journey.get_end_time_min()).zfill(2), ]
 
-    mainForm['departing_station_1'] = departingStation
-    mainForm['arriving_station_1'] = arrivingStation
+    main_form['departing_station_1'] = journey.get_depart_station()
+    main_form['arriving_station_1'] = journey.get_arriving_station()
 
-    mainForm['delayReason_1'] = [delayReason,]
-    mainForm['delay_1'] = [delay,]
+    main_form['delayReason_1'] = [journey.get_delay_reason(), ]
+    main_form['delay_1'] = [journey.get_delay_type(), ]
 
-    control = mainForm.find_control("uploadedfile_1")
-    control.add_file(open("/home/adam/image.jpeg"), 'text/plain', "/home/adam/image.jpeg")
+    control = main_form.find_control("uploadedfile_1")
+    control.add_file(open(ticket.get_ticket_photo_path()), 'text/plain', ticket.get_ticket_photo_path())
 
-    mainForm['compensation'] = [compensation,]
-    mainForm['photocard_id_1'] = photocard_id
+    compensation = "National Rail Vouchers"
+    main_form['compensation'] = [compensation, ]
+    main_form['photocard_id_1'] = user.get_photocard_id()
 
 
-def submit_form(browser):
-    response = browser.submit()
-    text = response.read()
-    temp_file = open("/home/adam/temp.html", "w")
-    temp_file.write(text)
-    temp_file.close()
+def submit_form(browser, debug=True):
+    if not debug:
+        response = browser.submit()
+        text = response.read()
+        temp_file = open("/home/adam/temp.html", "w")
+        temp_file.write(text)
+        temp_file.close()

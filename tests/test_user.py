@@ -4,6 +4,7 @@ __author__ = 'adam'
 from unittest import TestCase
 from nose.tools import *
 import southern.utils.userUtils as userUtils
+import tempfile
 
 
 class test_User(TestCase):
@@ -74,4 +75,39 @@ class test_User(TestCase):
         self.user.set_photocard_id(expected_photocard_id)
         user_photocard_id = self.user.get_photocard_id()
         self.assertEquals(expected_photocard_id, user_photocard_id)
+
+    def test_save(self):
+        tmp_file = tempfile.NamedTemporaryFile('w').name
+
+        title = 'Mr'
+        self.user.set_title(title)
+
+        forename = 'Adam'
+        self.user.set_forename(forename)
+
+        surname = 'Davis'
+        self.user.set_surname(surname)
+
+        email = 'davisadam10@googlemail.com'
+        self.user.set_email(email)
+
+        phone_number = 07756134612
+        self.user.set_phone_number(phone_number)
+
+        address1 = '69 Albury Road'
+        address2 = 'Merstham'
+        city = 'Redhill'
+        county = 'Surrey'
+        postcode = 'RH1 3LP'
+        self.user.set_address1(address1)
+        self.user.set_address2(address2)
+        self.user.set_city(city)
+        self.user.set_county(county)
+        self.user.set_postcode(postcode)
+
+        photocard_id = "MJD2214"
+        self.user.set_photocard_id(photocard_id)
+
+        self.user.save(tmp_file)
+
 

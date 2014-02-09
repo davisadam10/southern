@@ -6,11 +6,11 @@ from nose.tools import *
 import southern.utils.ticketUtils as ticketUtils
 
 
-class test_Ticker(TestCase):
+class test_Ticket(TestCase):
     def setUp(self):
         self.ticket = ticketUtils.Ticket()
 
-    def test_set_ticketType(self):
+    def test_set_ticket_type(self):
         ticket_type = 'monthly'
         self.ticket.set_ticket_type(ticket_type)
         result = self.ticket.get_ticket_type()

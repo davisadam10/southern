@@ -4,17 +4,17 @@ import pickle
 
 class User(object):
     def __init__(self):
-        self.__title = ""
-        self.__forename = ""
-        self.__surname = ""
-        self.__email = ""
-        self.__phoneNum = 0
-        self.__address1 = ""
-        self.__address2 = ""
-        self.__city = ""
-        self.__county = ""
-        self.__postcode = ""
-        self.__photocard_id = ""
+        self.__title = None
+        self.__forename = None
+        self.__surname = None
+        self.__email = None
+        self.__phoneNum = None
+        self.__address1 = None
+        self.__address2 = None
+        self.__city = None
+        self.__county = None
+        self.__postcode = None
+        self.__photocard_id = None
 
     def set_title(self, user_title):
         """
@@ -168,16 +168,71 @@ class User(object):
         """
         return self.__photocard_id
 
+    def validate(self):
+        valid = True
+        errors = []
+        if not self.__title:
+            valid = False
+            errors.append('User: title not set')
+
+        if not self.__forename:
+            valid = False
+            errors.append('User: forename not set')
+
+        if not self.__surname:
+            valid = False
+            errors.append('User: surname not set')
+
+        if not self.__email:
+            valid = False
+            errors.append('User: email address not set')
+
+        if not self.__phoneNum:
+            valid = False
+            errors.append('User: phone number not set')
+
+        if not self.__address1:
+            valid = False
+            errors.append('User: address line 1 not set')
+
+        if not self.__address2:
+            vaild = False
+            errors.append('User: address line 2 not set')
+
+        if not self.__city:
+            valid = False
+            errors.append('User: city not set')
+
+        if not self.__county:
+            valid = False
+            errors.append('User: county not set')
+
+        if not self.__postcode:
+            valid = False
+            errors.append('User: postcode not set')
+
+        if not self.__photocard_id:
+            valid = False
+            errors.append('User: photocard id not set')
+
+        return valid, errors
+
     def save(self, file_path):
         """
 
         :param file_path: the file path we wish to save too
         :return: the file path saved out
         """
-        tmp_file = open(file_path, "w")
-        pickle.dump(self, tmp_file)
-        tmp_file.close()
-        return file_path
+        valid, errors = self.validate()
+        if valid:
+            tmp_file = open(file_path, "w")
+            pickle.dump(self, tmp_file)
+            tmp_file.close()
+            return file_path
+        else:
+            raise StandardError('\n'.join(errors))
+
+
 
 
 

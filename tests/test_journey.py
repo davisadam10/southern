@@ -5,7 +5,6 @@ from unittest import TestCase
 from nose.tools import *
 import southern.utils.journeyUtils as journeyUtils
 
-
 class test_Journey(TestCase):
     def setUp(self):
         self.journey = journeyUtils.Journey()
