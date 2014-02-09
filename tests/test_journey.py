@@ -68,6 +68,7 @@ class test_Journey(TestCase):
         month = 1
         self.journey.set_month(month)
         result = self.journey.get_month()
+        month = str(month).zfill(2)
         self.assertEquals(result, month)
 
     def test_year(self):
