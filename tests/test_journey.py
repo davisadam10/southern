@@ -44,7 +44,7 @@ class test_Journey(TestCase):
         minute = 32
         self.journey.set_end_time_min(minute)
         result = self.journey.get_end_time_min()
-        self.assertEquals(minute, result)
+        self.assertEquals(minute+2, result)
 
     def test_delay(self):
         delay = "60-119 mins"
