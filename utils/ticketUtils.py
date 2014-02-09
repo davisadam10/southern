@@ -1,16 +1,28 @@
 __author__ = 'adam'
-import pickle
+import datetime
 import os
+from southern.utils.baseUtils import SouthernBase
 
 
-class Ticket(object):
+class Ticket(SouthernBase):
     def __init__(self):
         self.__ticket_type = None
         self.__cost = None
         self.__ticket_photo_path = None
-        self.__ticket_expire_date = None
+
+        self.__ticket_start_day = None
+        self.__ticket_start_month = None
+        self.__ticket_start_year = None
+
+        self.__ticket_expire_day = None
+        self.__ticket_expire_month = None
+        self.__ticket_expire_year = None
+
+        self.__valid_ticket_types = ['monthly']
 
     def set_ticket_type(self, ticket_type):
+        if ticket_type not in self.__valid_ticket_types:
+            raise ValueError('Ticket Type not valid')
         self.__ticket_type = ticket_type
 
     def get_ticket_type(self):
@@ -31,6 +43,52 @@ class Ticket(object):
 
     def get_ticket_photo_path(self):
         return self.__ticket_photo_path
+
+    def set_ticket_start_date(self, day, month, year):
+        self.__ticket_start_day = day
+        self.__ticket_start_month = month
+        self.__ticket_start_year = year
+
+    def get_ticket_start_date(self):
+        return datetime.date(day=self.__ticket_start_day,
+                             month=self.__ticket_start_month,
+                             year=self.__ticket_start_year
+        )
+
+    def set_ticket_end_date(self, day, month, year):
+        self.__ticket_expire_day = day
+        self.__ticket_expire_month = month
+        self.__ticket_expire_year = year
+
+    def get_ticket_end_date(self):
+        return datetime.date(day=self.__ticket_expire_day,
+                             month=self.__ticket_expire_month,
+                             year=self.__ticket_expire_year
+        )
+
+    def validate(self):
+        valid = True
+        errors = []
+
+        if not self.__ticket_type:
+            valid = False
+            errors.append('Ticket: ticket type not set')
+
+        if not self.__cost:
+            valid = False
+            errors.append('Ticket: cost not set')
+
+        if not self.__ticket_photo_path:
+            valid = False
+            errors.append('Ticket: photo path not set')
+
+        #todo
+        #self.__ticket_expire_date = None
+
+        return valid, errors
+
+
+
 
 
 

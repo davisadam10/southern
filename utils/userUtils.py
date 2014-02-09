@@ -1,8 +1,9 @@
 __author__ = 'adam'
 import pickle
+from southern.utils.baseUtils import SouthernBase
 
 
-class User(object):
+class User(SouthernBase):
     def __init__(self):
         self.__title = None
         self.__forename = None
@@ -216,28 +217,6 @@ class User(object):
             errors.append('User: photocard id not set')
 
         return valid, errors
-
-    def save(self, file_path):
-        """
-
-        :param file_path: the file path we wish to save too
-        :return: the file path saved out
-        """
-        valid, errors = self.validate()
-        if valid:
-            tmp_file = open(file_path, "w")
-            pickle.dump(self, tmp_file)
-            tmp_file.close()
-            return file_path
-        else:
-            raise StandardError('\n'.join(errors))
-
-
-
-
-
-
-
 
 
 '''

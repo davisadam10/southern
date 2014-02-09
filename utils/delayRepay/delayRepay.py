@@ -1,6 +1,10 @@
 __author__ = 'adam'
 import mechanize
 
+
+def loadUser(file_path):
+
+
 def get_browser():
     br = mechanize.Browser()
     url = 'http://www.southernrailway.com/your-journey/customer-services/delay-repay/delay-repay-form'
