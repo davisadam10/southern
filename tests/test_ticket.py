@@ -3,7 +3,7 @@ __author__ = 'adam'
 
 from unittest import TestCase
 from nose.tools import *
-import utils.ticketUtils as ticketUtils
+import southern.utils.ticketUtils as ticketUtils
 
 
 class test_Ticker(TestCase):
