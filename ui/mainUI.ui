@@ -105,8 +105,13 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>Merstham</string>
@@ -188,6 +193,11 @@
        </property>
        <item>
         <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Jan</string>
         </property>
        </item>
@@ -258,6 +268,11 @@
        </property>
        <item>
         <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Merstham</string>
         </property>
        </item>
@@ -326,7 +341,7 @@
         <string>Ticket Type</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="forenameLineEdit_2">
+      <widget class="QLineEdit" name="costLineEdit">
        <property name="geometry">
         <rect>
          <x>130</x>
@@ -393,6 +408,11 @@
        </property>
        <item>
         <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Jan</string>
         </property>
        </item>
@@ -452,7 +472,7 @@
         </property>
        </item>
       </widget>
-      <widget class="QLineEdit" name="forenameLineEdit_3">
+      <widget class="QLineEdit" name="photopathLineEdit">
        <property name="geometry">
         <rect>
          <x>130</x>
@@ -486,6 +506,11 @@
        </property>
        <item>
         <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Jan</string>
         </property>
        </item>
@@ -545,7 +570,7 @@
         </property>
        </item>
       </widget>
-      <widget class="QComboBox" name="departingStationCombo_2">
+      <widget class="QComboBox" name="ticketTypeCombo">
        <property name="geometry">
         <rect>
          <x>130</x>
@@ -554,6 +579,11 @@
          <height>27</height>
         </rect>
        </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>monthly</string>
@@ -624,7 +654,7 @@
       <property name="title">
        <string>Pasenger Info</string>
       </property>
-      <widget class="QLabel" name="photocardId">
+      <widget class="QLabel" name="photocardIdLabel">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -715,7 +745,7 @@
         <string/>
        </property>
       </widget>
-      <widget class="QLineEdit" name="photocardId_2">
+      <widget class="QLineEdit" name="photocardIdLineEdit">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -853,6 +883,11 @@
        </property>
        <item>
         <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Mr</string>
         </property>
        </item>
@@ -971,6 +1006,11 @@
        </property>
        <item>
         <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>30-59 mins</string>
         </property>
        </item>
@@ -996,6 +1036,11 @@
        </property>
        <item>
         <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Delayed departure</string>
         </property>
        </item>
@@ -1016,7 +1061,7 @@
        </item>
       </widget>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="submitCLaimButton">
       <property name="geometry">
        <rect>
         <x>460</x>
@@ -1053,19 +1098,19 @@
       <string>Load Settings</string>
      </property>
      <addaction name="separator"/>
-     <addaction name="actionUser_Settings"/>
-     <addaction name="actionJourney_Info"/>
-     <addaction name="actionTicket_Info"/>
-     <addaction name="actionDelay_Info"/>
+     <addaction name="actionPassenger_InfoLoad"/>
+     <addaction name="actionJourney_InfoLoad"/>
+     <addaction name="actionTicket_InfoLoad"/>
+     <addaction name="actionDelay_InfoLoad"/>
     </widget>
     <widget class="QMenu" name="menuSave_Settings">
      <property name="title">
       <string>Save Settings</string>
      </property>
-     <addaction name="actionPassenger_Info"/>
-     <addaction name="actionJourney_Info_2"/>
-     <addaction name="actionTicket_Info_2"/>
-     <addaction name="actionDelay_Info_2"/>
+     <addaction name="actionPassenger_InfoSave"/>
+     <addaction name="actionJourney_InfoSave"/>
+     <addaction name="actionTicket_InfoSave"/>
+     <addaction name="actionDelay_InfoSave"/>
     </widget>
     <addaction name="menuSave_Settings"/>
     <addaction name="separator"/>
@@ -1081,42 +1126,42 @@
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionUser_Settings">
+  <action name="actionPassenger_InfoLoad">
    <property name="text">
     <string>Passanger Info</string>
    </property>
   </action>
-  <action name="actionJourney_Info">
+  <action name="actionJourney_InfoLoad">
    <property name="text">
     <string>Journey Info</string>
    </property>
   </action>
-  <action name="actionTicket_Info">
+  <action name="actionTicket_InfoLoad">
    <property name="text">
     <string>Ticket Info</string>
    </property>
   </action>
-  <action name="actionDelay_Info">
+  <action name="actionDelay_InfoLoad">
    <property name="text">
     <string>Delay Info</string>
    </property>
   </action>
-  <action name="actionPassenger_Info">
+  <action name="actionPassenger_InfoSave">
    <property name="text">
     <string>Passenger Info</string>
    </property>
   </action>
-  <action name="actionJourney_Info_2">
+  <action name="actionJourney_InfoSave">
    <property name="text">
     <string>Journey Info</string>
    </property>
   </action>
-  <action name="actionTicket_Info_2">
+  <action name="actionTicket_InfoSave">
    <property name="text">
     <string>Ticket Info</string>
    </property>
   </action>
-  <action name="actionDelay_Info_2">
+  <action name="actionDelay_InfoSave">
    <property name="text">
     <string>Delay Info</string>
    </property>
