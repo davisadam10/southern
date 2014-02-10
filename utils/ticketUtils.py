@@ -18,7 +18,7 @@ class Ticket(SouthernBase):
         self.__ticket_expire_month = None
         self.__ticket_expire_year = None
 
-        self.__valid_ticket_types = ['monthly']
+        self.__valid_ticket_types = ['monthly', 'yearly']
 
     def set_ticket_type(self, ticket_type):
         if ticket_type not in self.__valid_ticket_types:

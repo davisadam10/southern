@@ -8,16 +8,11 @@ def load_setting(file_path):
     tmp_file.close()
     return settings
 
-
-
-def get_browser():
-    br = mechanize.Browser()
+def complete_form( user, journey, ticket, delay, debug=True):
+    browser = mechanize.Browser()
     url = 'http://www.southernrailway.com/your-journey/customer-services/delay-repay/delay-repay-form'
-    br.open(url)
-    return br
+    browser.open(url)
 
-
-def complete_form( browser, user, journey, ticket, delay):
     forms = []
     for form in browser.forms():
         forms.append(form)
@@ -42,8 +37,12 @@ def complete_form( browser, user, journey, ticket, delay):
     main_form['cost_pounds_1'] = pounds
     main_form['cost_pence_1'] = pence
 
+    valid_months = ['', 'Jan', 'Feb', 'Mar',
+                    'Apr', 'May', 'Jun', 'Jul',
+                    'Aug', 'Sept', 'Oct', 'Nov',
+                    'Dec']
     main_form['journey_date_day_1'] = [str(journey.get_day()), ]
-    main_form['journey_date_month_1'] = [journey.get_month(), ]
+    main_form['journey_date_month_1'] = [str(valid_months.index(journey.get_month())).zfill(2), ]
     main_form['journey_date_year_1'] = [str(journey.get_year()), ]
 
     main_form['scheduleddeparturehours_1'] = [str(journey.get_start_time_hour()).zfill(2), ]
@@ -65,8 +64,6 @@ def complete_form( browser, user, journey, ticket, delay):
     main_form['compensation'] = [compensation, ]
     main_form['photocard_id_1'] = user.get_photocard_id()
 
-
-def submit_form(browser, debug=True):
     if not debug:
         response = browser.submit()
         text = response.read()

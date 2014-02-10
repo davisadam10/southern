@@ -29,9 +29,9 @@ class MainUI(QtGui.QMainWindow):
         self.__populate_combo(self.ui.departureHourCombo, 24)
         self.__populate_combo(self.ui.departureMinCombo, 60)
 
-        self.__populate_combo(self.ui.journeyDate_DayCombo, 31, offset=1)
+        self.__populate_combo(self.ui.journeyDate_DayCombo, 31, offset=1, fill=0)
         self.__populate_combo(self.ui.validFromDate_Combo, 31, offset=1)
-        self.__populate_combo(self.ui.validFromDate_Combo_2, 31, offset=1)
+        self.__populate_combo(self.ui.validUntilDate_Combo, 31, offset=1)
 
         self.__populate_combo(self.ui.journeyDate_YearCombo, 3, offset=2014)
         self.__populate_combo(self.ui.validFromYearCombo, 3, offset=2014)
@@ -52,10 +52,28 @@ class MainUI(QtGui.QMainWindow):
         self.ui.postcodeLineEdit.editingFinished.connect(self.set_user_postcode)
 
         self.ui.departingStationCombo.currentIndexChanged.connect(self.set_journey_depart)
-        self.ui.departureHourCombo.currentIndexChanged.connect(self.set_journey_depart_time)
-        self.ui.departureMinCombo.currentIndexChanged.connect(self.set_journey_depart_time)
-        self.ui.arrivalHour_Combo.currentIndexChanged.connect(self.set_journey_arrive_time)
-        self.ui.arrivalMin_Combo.currentIndexChanged.connect(self.set_journey_arrive_time)
+        self.ui.arrivingStationCombo.currentIndexChanged.connect(self.set_journey_arrive)
+        self.ui.departureHourCombo.currentIndexChanged.connect(self.set_journey_depart_time_hour)
+        self.ui.departureMinCombo.currentIndexChanged.connect(self.set_journey_depart_time_min)
+        self.ui.arrivalHour_Combo.currentIndexChanged.connect(self.set_journey_arrive_time_hour)
+        self.ui.arrivalMin_Combo.currentIndexChanged.connect(self.set_journey_arrive_time_min)
+        self.ui.journeyDate_DayCombo.currentIndexChanged.connect(self.set_journey_date)
+        self.ui.journeyDate_MonthCombo.currentIndexChanged.connect(self.set_journey_date)
+        self.ui.journeyDate_YearCombo.currentIndexChanged.connect(self.set_journey_date)
+
+        self.ui.ticketTypeCombo.currentIndexChanged.connect(self.set_ticket_type)
+        self.ui.costLineEdit.editingFinished.connect(self.set_ticket_cost)
+        self.ui.validFromDate_Combo.currentIndexChanged.connect(self.set_valid_from_date)
+        self.ui.validFromMonth_Combo.currentIndexChanged.connect(self.set_valid_from_date)
+        self.ui.validFromYearCombo.currentIndexChanged.connect(self.set_valid_from_date)
+        self.ui.validUntilDate_Combo.currentIndexChanged.connect(self.set_valid_until_date)
+        self.ui.validUntilMonth_Combo.currentIndexChanged.connect(self.set_valid_until_date)
+        self.ui.validUntilYearCombo.currentIndexChanged.connect(self.set_valid_until_date)
+
+        self.ui.photoBrowseButton.clicked.connect(self.browse_for_photo)
+
+        self.ui.delayTypeCombo.currentIndexChanged.connect(self.set_delay_type)
+        self.ui.delayReason_Combo.currentIndexChanged.connect(self.set_delay_reason)
 
         self.ui.actionPassenger_InfoSave.triggered.connect(self.save_user_settings)
         self.ui.actionPassenger_InfoLoad.triggered.connect(self.load_user_settings)
@@ -71,10 +89,10 @@ class MainUI(QtGui.QMainWindow):
 
         self.ui.submitCLaimButton.clicked.connect(self.submit_claim)
 
-    def __populate_combo(self, combo_box, range_limit, offset=0):
+    def __populate_combo(self, combo_box, range_limit, offset=0, fill=2):
         x = 0
         for x in xrange(range_limit):
-            x_val = str(x+offset).zfill(2)
+            x_val = str(x+offset).zfill(fill)
             combo_box.addItem(x_val)
 
     def submit_claim(self):
@@ -98,8 +116,10 @@ class MainUI(QtGui.QMainWindow):
         errors.extend(delay_errors)
 
         if not False in valid:
+            reload(delayRepayUtils)
+            delayRepayUtils.complete_form(self.user, self.journey, self.ticket, self.delay, debug=False)
+
             QtGui.QMessageBox.information( self, 'Sucess', "Delay Repay Submitted - Check Your Email")
-            #Run Submit
         else:
             QtGui.QMessageBox.critical( self, 'Error: Incomplete Form', "\n".join(errors))
             return
@@ -121,17 +141,19 @@ class MainUI(QtGui.QMainWindow):
         self.__save_settings(file_type, self.delay)
 
     def __save_settings(self, file_type, data):
+        valid, errors = data.validate()
+        if not valid:
+            QtGui.QMessageBox.critical( self, 'Error: Incomplete Form', "\n".join(errors))
+            return
+
         file_name = QtGui.QFileDialog.getSaveFileName( self, "Save Settings", "/home/adam", "*%s"%(file_type), "*%s"%(file_type))
         if file_name:
             file_name = str(file_name)
             if not file_name.endswith(file_type):
                 file_name += file_type
-            valid, errors = self.user.validate()
-            if not valid:
-                QtGui.QMessageBox.critical( self, 'Error: Incomplete Form', "\n".join(errors))
-            else:
-                data.save(file_name)
-                QtGui.QMessageBox.information( self, 'Sucess', "Settings Saved")
+
+            data.save(file_name)
+            QtGui.QMessageBox.information( self, 'Sucess', "Settings Saved")
 
     def load_user_settings(self):
         file_type = '.DRPUser'
@@ -220,12 +242,47 @@ class MainUI(QtGui.QMainWindow):
         departure_min = self.journey.get_start_time_min()
         self.__set_combo_box(departure_min, self.ui.departureMinCombo)
 
+
         arrival_hour = self.journey.get_end_time_hour()
         self.__set_combo_box(arrival_hour, self.ui.arrivalHour_Combo)
 
         arrival_min = self.journey.get_end_time_min()
-        self.____set_combo_box(arrival_min, self.ui.arrivalMin_Combo)
+        self.__set_combo_box(arrival_min, self.ui.arrivalMin_Combo)
 
+        journey_day = self.journey.get_day()
+        journey_month = self.journey.get_month()
+        journey_year = self.journey.get_year()
+        self.__set_combo_box(journey_day, self.ui.journeyDate_DayCombo)
+        self.__set_combo_box(journey_month, self.ui.journeyDate_MonthCombo)
+        self.__set_combo_box(journey_year, self.ui.journeyDate_YearCombo)
+
+    def refresh_delay_ui(self):
+        delay_type = self.delay.get_delay_type()
+        delay_reason = self.delay.get_delay_reason()
+
+        self.__set_combo_box(str(delay_type), self.ui.delayTypeCombo)
+        self.__set_combo_box(str(delay_reason), self.ui.delayReason_Combo)
+
+    def refresh_ticket_ui(self):
+        ticket_type = self.ticket.get_ticket_type()
+        ticket_cost = self.ticket.get_ticket_cost()
+
+        self.__set_combo_box(str(ticket_type), self.ui.ticketTypeCombo)
+        self.ui.costLineEdit.setText(ticket_cost)
+
+        valid_from = self.ticket.get_ticket_start_date()
+        valid_until = self.ticket.get_ticket_end_date()
+
+        self.__set_combo_box(str(valid_from.day).zfill(2), self.ui.validFromDate_Combo)
+        self.ui.validFromMonth_Combo.setCurrentIndex(valid_from.month)
+        self.__set_combo_box(str(valid_from.year), self.ui.validFromYearCombo)
+
+        self.__set_combo_box(str(valid_until.day).zfill(2), self.ui.validUntilDate_Combo)
+        self.ui.validUntilMonth_Combo.setCurrentIndex(valid_until.month)
+        self.__set_combo_box(str(valid_until.year), self.ui.validUntilYearCombo)
+
+        photo_path = self.ticket.get_ticket_photo_path()
+        self.ui.photopathLineEdit.setText(str(photo_path))
 
     def set_user_title(self):
         title = self.ui.titleComboBox.currentText()
@@ -275,29 +332,70 @@ class MainUI(QtGui.QMainWindow):
         departing_station = self.ui.departingStationCombo.currentText()
         self.journey.set_depart_station(str(departing_station))
 
-    def set_journey_depart_time(self):
-        depart_hour = self.ui.departureHourCombo.currentText()
-        depart_min = self.ui.departureMinCombo.currentText()
+    def set_journey_arrive(self):
+        arriving_station = self.ui.arrivingStationCombo.currentText()
+        self.journey.set_arriving_station(str(arriving_station))
 
+    def set_journey_depart_time_hour(self):
+        depart_hour = self.ui.departureHourCombo.currentText()
         self.journey.set_start_time_hour(str(depart_hour))
+
+    def set_journey_depart_time_min(self):
+        depart_min = self.ui.departureMinCombo.currentText()
         self.journey.set_start_time_min(str(depart_min))
 
-    def set_journey_arrive_time(self):
+    def set_journey_arrive_time_hour(self):
         arrive_hour = self.ui.arrivalHour_Combo.currentText()
-        arrive_min = self.ui.arrivalMin_Combo.currentText()
-
         self.journey.set_end_time_hour(str(arrive_hour))
+
+    def set_journey_arrive_time_min(self):
+        arrive_min = self.ui.arrivalMin_Combo.currentText()
         self.journey.set_end_time_min(str(arrive_min))
 
+    def set_journey_date(self):
+        day = self.ui.journeyDate_DayCombo.currentText()
+        month = self.ui.journeyDate_MonthCombo.currentText()
+        year = self.ui.journeyDate_YearCombo.currentText()
 
+        self.journey.set_day(str(day))
+        self.journey.set_month(str(month))
+        self.journey.set_year(str(year))
 
+    def set_delay_type(self):
+        delay_type = self.ui.delayTypeCombo.currentText()
+        self.delay.set_delay_type(str(delay_type))
 
+    def set_delay_reason(self):
+        delay_reason = self.ui.delayReason_Combo.currentText()
+        self.delay.set_delay_reason(str(delay_reason))
 
+    def set_ticket_type(self):
+        ticket_type = self.ui.ticketTypeCombo.currentText()
+        self.ticket.set_ticket_type(str(ticket_type))
 
+    def set_ticket_cost(self):
+        cost = self.ui.costLineEdit.text()
+        self.ticket.set_ticket_cost(str(cost))
 
+    def set_valid_from_date(self):
+        day = self.ui.validFromDate_Combo.currentText()
+        month = self.ui.validFromMonth_Combo.currentIndex()
+        year = self.ui.validFromYearCombo.currentText()
 
+        self.ticket.set_ticket_start_date(int(day), int(month), int(year))
 
+    def set_valid_until_date(self):
+        day = self.ui.validUntilDate_Combo.currentText()
+        month = self.ui.validUntilMonth_Combo.currentIndex()
+        year = self.ui.validUntilYearCombo.currentText()
 
+        self.ticket.set_ticket_end_date(int(day), int(month), int(year))
+
+    def browse_for_photo(self):
+        file_name = QtGui.QFileDialog.getOpenFileName( self, "Load Settings", "/home/adam", "*jpg", "*jpg")
+        if file_name:
+            self.ui.photopathLineEdit.setText(str(file_name))
+            self.ticket.set_ticket_photo_path(str(file_name))
 
 app = QtGui.QApplication(sys.argv)
 window = MainUI()

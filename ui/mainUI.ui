@@ -351,7 +351,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QComboBox" name="validFromDate_Combo_2">
+      <widget class="QComboBox" name="validUntilDate_Combo">
        <property name="geometry">
         <rect>
          <x>130</x>
@@ -480,6 +480,9 @@
          <width>151</width>
          <height>27</height>
         </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
       <widget class="QLabel" name="validFromLabel">

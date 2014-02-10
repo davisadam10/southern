@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainUI.ui'
 #
-# Created: Mon Feb 10 17:09:30 2014
+# Created: Mon Feb 10 17:47:55 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -114,9 +114,9 @@ class Ui_MainWindow(object):
         self.costLineEdit = QtGui.QLineEdit(self.TicketInfoGroupBox)
         self.costLineEdit.setGeometry(QtCore.QRect(130, 50, 201, 27))
         self.costLineEdit.setObjectName(_fromUtf8("costLineEdit"))
-        self.validFromDate_Combo_2 = QtGui.QComboBox(self.TicketInfoGroupBox)
-        self.validFromDate_Combo_2.setGeometry(QtCore.QRect(130, 110, 51, 27))
-        self.validFromDate_Combo_2.setObjectName(_fromUtf8("validFromDate_Combo_2"))
+        self.validUntilDate_Combo = QtGui.QComboBox(self.TicketInfoGroupBox)
+        self.validUntilDate_Combo.setGeometry(QtCore.QRect(130, 110, 51, 27))
+        self.validUntilDate_Combo.setObjectName(_fromUtf8("validUntilDate_Combo"))
         self.firstNameLabel_2 = QtGui.QLabel(self.TicketInfoGroupBox)
         self.firstNameLabel_2.setGeometry(QtCore.QRect(30, 50, 91, 27))
         self.firstNameLabel_2.setObjectName(_fromUtf8("firstNameLabel_2"))
@@ -145,6 +145,7 @@ class Ui_MainWindow(object):
         self.validFromMonth_Combo.addItem(_fromUtf8(""))
         self.photopathLineEdit = QtGui.QLineEdit(self.TicketInfoGroupBox)
         self.photopathLineEdit.setGeometry(QtCore.QRect(130, 140, 151, 27))
+        self.photopathLineEdit.setReadOnly(True)
         self.photopathLineEdit.setObjectName(_fromUtf8("photopathLineEdit"))
         self.validFromLabel = QtGui.QLabel(self.TicketInfoGroupBox)
         self.validFromLabel.setGeometry(QtCore.QRect(30, 80, 101, 27))
