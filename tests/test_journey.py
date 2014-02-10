@@ -4,6 +4,8 @@ __author__ = 'adam'
 from unittest import TestCase
 from nose.tools import *
 import southern.utils.journeyUtils as journeyUtils
+import tempfile
+
 
 class test_Journey(TestCase):
     def setUp(self):
@@ -45,18 +47,6 @@ class test_Journey(TestCase):
         result = self.journey.get_end_time_min()
         self.assertEquals(minute, result)
 
-    def test_delay(self):
-        delay = "60-119 mins"
-        self.journey.set_delay_type(delay)
-        result = self.journey.get_delay_type()
-        self.assertEquals(delay, result)
-
-    def test_delay_reason(self):
-        delay_reason = "Delayed departure"
-        self.journey.set_delay_reason(delay_reason)
-        result = self.journey.get_delay_reason()
-        self.assertEquals(result, delay_reason)
-
     def test_day(self):
         day = 1
         self.journey.set_day(day)
@@ -75,5 +65,25 @@ class test_Journey(TestCase):
         self.journey.set_year(year)
         result = self.journey.get_year()
         self.assertEquals(result, year)
+
+    def test_save(self):
+        tmp_file = tempfile.NamedTemporaryFile('w').name
+
+        departing_station = 'merstham'
+        arriving_station = 'london victoria'
+        self.journey.set_depart_station(departing_station)
+        self.journey.set_arriving_station(arriving_station)
+
+        self.journey.set_day(1)
+        self.journey.set_month(1)
+        self.journey.set_year(2014)
+
+        self.journey.set_start_time_hour(8)
+        self.journey.set_start_time_min(10)
+
+        self.journey.set_end_time_hour(9)
+        self.journey.set_end_time_min(30)
+
+        self.journey.save(tmp_file)
 
 

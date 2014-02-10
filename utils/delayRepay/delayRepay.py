@@ -12,7 +12,7 @@ def get_browser():
     return br
 
 
-def complete_form( browser, user, journey, ticket):
+def complete_form( browser, user, journey, ticket, delay):
     forms = []
     for form in browser.forms():
         forms.append(form)
@@ -50,8 +50,8 @@ def complete_form( browser, user, journey, ticket):
     main_form['departing_station_1'] = journey.get_depart_station()
     main_form['arriving_station_1'] = journey.get_arriving_station()
 
-    main_form['delayReason_1'] = [journey.get_delay_reason(), ]
-    main_form['delay_1'] = [journey.get_delay_type(), ]
+    main_form['delayReason_1'] = [delay.get_delay_reason(), ]
+    main_form['delay_1'] = [delay.get_delay_type(), ]
 
     control = main_form.find_control("uploadedfile_1")
     control.add_file(open(ticket.get_ticket_photo_path()), 'text/plain', ticket.get_ticket_photo_path())

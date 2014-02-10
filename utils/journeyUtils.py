@@ -1,7 +1,8 @@
 __author__ = 'adam'
+from southern.utils.baseUtils import SouthernBase
 
 
-class Journey(object):
+class Journey(SouthernBase):
     def __init__(self):
         """
         Class which is used to represent a journey, which can be stored
@@ -9,18 +10,15 @@ class Journey(object):
 
 
         """
-        self.__departing_station = ""
-        self.__arriving_station = ""
-        self.__day = 0
-        self.__month = 0
-        self.__year = 0
-        self.__start_time_hour = 0
-        self.__start_time_min = 0
-        self.__end_time_hour = 0
-        self.__end_time_min = 0
-        self.__delay = ""
-        self.__delay_reason = ""
-
+        self.__departing_station = None
+        self.__arriving_station = None
+        self.__day = None
+        self.__month = None
+        self.__year = None
+        self.__start_time_hour = None
+        self.__start_time_min = None
+        self.__end_time_hour = None
+        self.__end_time_min = None
 
     def set_depart_station(self, station):
         """
@@ -140,16 +138,45 @@ class Journey(object):
     def get_end_time_min(self):
         return self.__end_time_min
 
-    def set_delay_type(self, delay_type):
-        self.__delay = delay_type
+    def validate(self):
+        valid = True
+        errors = []
 
-    def get_delay_type(self):
-        return self.__delay
+        if not self.__departing_station:
+            valid = False
+            errors.append('Journey: departing station not set')
 
-    def set_delay_reason(self, reason):
-        self.__delay_reason = reason
+        if not self.__arriving_station:
+            valid = False
+            errors.append('Journey: arriving station not set')
 
-    def get_delay_reason(self):
-        return self.__delay_reason
+        if not self.__day:
+            valid = False
+            errors.append('Journey: day not set')
 
+        if not self.__month:
+            valid = False
+            errors.append('Journey: month not set')
+
+        if not self.__year:
+            valid = False
+            errors.append('Journey: year not set')
+
+        if not self.__start_time_hour:
+            valid = False
+            errors.append('Jounrey: start hour not set')
+
+        if not self.__start_time_min:
+            valid = False
+            errors.append('Journey: start min not set')
+
+        if not self.__end_time_hour:
+            valid = False
+            errors.append('Journey: end hour not set')
+
+        if not self.__end_time_min:
+            valid = False
+            errors.append('Journey: end min not set')
+
+        return valid, errors
 
