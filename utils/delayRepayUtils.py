@@ -41,6 +41,7 @@ def complete_form( user, journey, ticket, delay, debug=True):
                     'Apr', 'May', 'Jun', 'Jul',
                     'Aug', 'Sept', 'Oct', 'Nov',
                     'Dec']
+
     main_form['journey_date_day_1'] = [str(journey.get_day()), ]
     main_form['journey_date_month_1'] = [str(valid_months.index(journey.get_month())).zfill(2), ]
     main_form['journey_date_year_1'] = [str(journey.get_year()), ]
