@@ -1,5 +1,5 @@
 import mechanize
-'''
+
 
 title = "Mr"
 firstName = "Adam"
@@ -15,18 +15,18 @@ photocard_id = "MJD2214"
 
 ticket_type_1 = "monthly"
 cost = 285.70
-day = 13
-month = str(01).zfill(2)
+day = 7
+month = str(02).zfill(2)
 year = 2014
 
 
 arrivingStation = "Merstham"
 departingStation = "London Victoria"
-startTime = 19.10
-arivingTime = 19.53
+startTime = 08.22
+arivingTime = 09.30
 
-delay = "60-119 mins"
-delayReason = "Delayed departure"
+delay = "30-59 mins"
+delayReason = "Train cancelled"
 
 
 
@@ -82,14 +82,14 @@ mainForm['delayReason_1'] = [delayReason,]
 mainForm['delay_1'] = [delay,]
 
 control = mainForm.find_control("uploadedfile_1")
-control.add_file(open("/home/adam/image.jpeg"), 'text/plain', "/home/adam/image.jpeg")
+control.add_file(open("/home/adam/image.jpeg"), 'text/plain', "/home/adam/railticketimages/feb_2014_ticket.JPG")
 
 mainForm['compensation'] = [compensation,]
 mainForm['photocard_id_1'] = photocard_id
 
 
 
-
+'''
 response = br.submit()
 text = response.read()
 tempFile = open("/home/adam/temp.html", "w")
