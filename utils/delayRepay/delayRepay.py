@@ -1,9 +1,36 @@
 __author__ = 'adam'
 import mechanize
+import pickle
+import sys
+from PyQt4 import QtCore, QtGui
+from southern.ui.mainUI import Ui_MainWindow
 
 
-def loadUser(file_path):
-    pass
+class MainUI(QtGui.QMainWindow):
+    def __init__(self):
+        QtGui.QMainWindow.__init__(self)
+
+        # Set up the user interface from Designer.
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+        # Connect up the buttons.
+        #self.ui.okButton.clicked.connect(self.accept)
+        #self.ui.cancelButton.clicked.connect(self.reject)
+
+app = QtGui.QApplication(sys.argv)
+window = MainUI()
+window.show()
+sys.exit(app.exec_())
+
+
+def load_setting(file_path):
+    tmp_file = open(file_path, 'r')
+    settings = pickle.load(tmp_file)
+    tmp_file.close()
+    return settings
+
+
 
 def get_browser():
     br = mechanize.Browser()
