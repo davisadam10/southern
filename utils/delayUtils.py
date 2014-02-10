@@ -13,13 +13,27 @@ class Delay(SouthernBase):
         self.__delay = None
         self.__delay_reason = None
 
+        self.__delays = ['30-59 mins',
+                         '60-119 mins',
+                         '120+ mins']
+
+        self.__delay_reasons = ['Train cancelled',
+                                'Delayed on route',
+                                'Missed connection',
+                                'Delayed departure']
+
     def set_delay_type(self, delay_type):
+        if not delay_type in self.__delays:
+            raise ValueError('delay type not valid')
+
         self.__delay = delay_type
 
     def get_delay_type(self):
         return self.__delay
 
     def set_delay_reason(self, reason):
+        if not reason in self.__delay_reasons:
+            raise ValueError('Reason not a valid selection')
         self.__delay_reason = reason
 
     def get_delay_reason(self):

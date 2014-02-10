@@ -20,11 +20,19 @@ class Journey(SouthernBase):
         self.__end_time_hour = None
         self.__end_time_min = None
 
+        self.__validStations = ['Merstham',
+                                'London Victoria',
+                                'London Bridge',
+                                'East Croydon']
+
     def set_depart_station(self, station):
         """
 
         :param station: the name of the station the journey departed from
         """
+        if not station in self.__validStations:
+            raise ValueError('Not a valid station')
+
         self.__departing_station = station
 
     def get_depart_station(self):
@@ -40,6 +48,9 @@ class Journey(SouthernBase):
 
         :param station: the name of the station the journey arrives at
         """
+        if not station in self.__validStations:
+            raise ValueError('Not a valid station')
+
         self.__arriving_station = station
 
     def get_arriving_station(self):
