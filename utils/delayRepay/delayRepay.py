@@ -4,6 +4,10 @@ import pickle
 import sys
 from PyQt4 import QtCore, QtGui
 from southern.ui.mainUI import Ui_MainWindow
+from southern.utils.userUtils import User
+from southern.utils.delayUtils import Delay
+from southern.utils.journeyUtils import Journey
+from southern.utils.ticketUtils import Ticket
 
 
 class MainUI(QtGui.QMainWindow):
@@ -14,9 +18,24 @@ class MainUI(QtGui.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.user = User()
+        self.journey = Journey()
+        self.ticket = Ticket()
+        self.delay = Delay()
+
         # Connect up the buttons.
-        #self.ui.okButton.clicked.connect(self.accept)
-        #self.ui.cancelButton.clicked.connect(self.reject)
+        self.ui.titleComboBox.currentIndexChanged.connect(self.set_user_title)
+        self.ui.forenameLineEdit.editingFinished.connect(self.set_user_forename)
+
+    def set_user_title(self):
+        title = self.ui.titleComboBox.currentText()
+        self.user.set_title(title)
+
+    def set_user_forename(self):
+        forename = self.ui.forenameLineEdit.text()
+        self.user.set_forename(str(forename))
+
+
 
 app = QtGui.QApplication(sys.argv)
 window = MainUI()

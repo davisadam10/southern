@@ -69,8 +69,8 @@ class test_Journey(TestCase):
     def test_save(self):
         tmp_file = tempfile.NamedTemporaryFile('w').name
 
-        departing_station = 'merstham'
-        arriving_station = 'london victoria'
+        departing_station = 'Merstham'
+        arriving_station = 'London Victoria'
         self.journey.set_depart_station(departing_station)
         self.journey.set_arriving_station(arriving_station)
 
