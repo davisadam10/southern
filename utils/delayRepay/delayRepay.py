@@ -22,6 +22,22 @@ class MainUI(QtGui.QMainWindow):
         self.ticket = Ticket()
         self.delay = Delay()
 
+        #Setup combo box values
+        self.__populate_combo(self.ui.arrivalHour_Combo, 24)
+        self.__populate_combo(self.ui.arrivalMin_Combo, 60)
+
+        self.__populate_combo(self.ui.departureHourCombo, 24)
+        self.__populate_combo(self.ui.departureMinCombo, 60)
+
+        self.__populate_combo(self.ui.journeyDate_DayCombo, 31, offset=1)
+        self.__populate_combo(self.ui.validFromDate_Combo, 31, offset=1)
+        self.__populate_combo(self.ui.validFromDate_Combo_2, 31, offset=1)
+
+        self.__populate_combo(self.ui.journeyDate_YearCombo, 3, offset=2014)
+        self.__populate_combo(self.ui.validFromYearCombo, 3, offset=2014)
+        self.__populate_combo(self.ui.validUntilYearCombo, 3, offset=2014)
+
+
         # Connect up ui signals
         self.ui.titleComboBox.currentIndexChanged.connect(self.set_user_title)
         self.ui.forenameLineEdit.editingFinished.connect(self.set_user_forename)
@@ -43,7 +59,23 @@ class MainUI(QtGui.QMainWindow):
 
         self.ui.actionPassenger_InfoSave.triggered.connect(self.save_user_settings)
         self.ui.actionPassenger_InfoLoad.triggered.connect(self.load_user_settings)
+
+        self.ui.actionJourney_InfoSave.triggered.connect(self.save_journey_settings)
+        self.ui.actionJourney_InfoLoad.triggered.connect(self.load_journey_settings)
+
+        self.ui.actionTicket_InfoSave.triggered.connect(self.save_ticket_settings)
+        self.ui.actionTicket_InfoLoad.triggered.connect(self.load_ticket_settings)
+
+        self.ui.actionDelay_InfoSave.triggered.connect(self.save_delay_settings)
+        self.ui.actionDelay_InfoLoad.triggered.connect(self.load_delay_settings)
+
         self.ui.submitCLaimButton.clicked.connect(self.submit_claim)
+
+    def __populate_combo(self, combo_box, range_limit, offset=0):
+        x = 0
+        for x in xrange(range_limit):
+            x_val = str(x+offset).zfill(2)
+            combo_box.addItem(x_val)
 
     def submit_claim(self):
         valid = []
@@ -74,7 +106,22 @@ class MainUI(QtGui.QMainWindow):
 
     def save_user_settings(self):
         file_type = '.DRPUser'
-        file_name = QtGui.QFileDialog.getSaveFileName( self, "Save User Settings", "/home/adam", "*%s"%(file_type), "*%s"%(file_type))
+        self.__save_settings(file_type, self.user)
+
+    def save_journey_settings(self):
+        file_type = '.DRPJourney'
+        self.__save_settings(file_type, self.journey)
+
+    def save_ticket_settings(self):
+        file_type = '.DRPTicket'
+        self.__save_settings(file_type, self.ticket)
+
+    def save_delay_settings(self):
+        file_type = '.DRPDelay'
+        self.__save_settings(file_type, self.delay)
+
+    def __save_settings(self, file_type, data):
+        file_name = QtGui.QFileDialog.getSaveFileName( self, "Save Settings", "/home/adam", "*%s"%(file_type), "*%s"%(file_type))
         if file_name:
             file_name = str(file_name)
             if not file_name.endswith(file_type):
@@ -83,24 +130,47 @@ class MainUI(QtGui.QMainWindow):
             if not valid:
                 QtGui.QMessageBox.critical( self, 'Error: Incomplete Form', "\n".join(errors))
             else:
-                self.user.save(file_name)
-                QtGui.QMessageBox.information( self, 'Sucess', "User Settings Saved")
+                data.save(file_name)
+                QtGui.QMessageBox.information( self, 'Sucess', "Settings Saved")
 
     def load_user_settings(self):
         file_type = '.DRPUser'
-        file_name = QtGui.QFileDialog.getOpenFileName( self, "Save User Settings", "/home/adam", "*%s"%(file_type), "*%s"%(file_type))
+        data = self.__load_settings(file_type)
+        if data:
+            self.user = data
+        self.refresh_user_ui()
+
+    def load_journey_settings(self):
+        file_type = '.DRPJourney'
+        data = self.__load_settings(file_type)
+        if data:
+            self.journey = data
+        self.refresh_journey_ui()
+
+    def load_ticket_settings(self):
+        file_type = '.DRPTicket'
+        data = self.__load_settings(file_type)
+        if data:
+            self.ticket = data
+        self.refresh_ticket_ui()
+
+    def load_delay_settings(self):
+        file_type = '.DRPDelay'
+        data = self.__load_settings(file_type)
+        if data:
+            self.delay = data
+        self.refresh_delay_ui()
+
+    def __load_settings(self, file_type):
+        file_name = QtGui.QFileDialog.getOpenFileName( self, "Load Settings", "/home/adam", "*%s"%(file_type), "*%s"%(file_type))
         if file_name:
-            self.user = delayRepayUtils.load_setting(file_name)
-            self.refresh_user_ui()
+            return delayRepayUtils.load_setting(file_name)
+
+        return None
 
     def refresh_user_ui(self):
         title = self.user.get_title()
-        x = 0
-        while x in xrange(self.ui.titleComboBox.count()):
-            item = str(self.ui.titleComboBox.itemText(x))
-            if item == title:
-                self.ui.titleComboBox.setCurrentIndex(x)
-            x += 1
+        self.__set_combo_box(title, self.ui.titleComboBox)
 
         forename = self.user.get_forename()
         self.ui.forenameLineEdit.setText(forename)
@@ -128,6 +198,34 @@ class MainUI(QtGui.QMainWindow):
         self.ui.cityLineEdit.setText(city)
         self.ui.countyLineEdit.setText(county)
         self.ui.postcodeLineEdit.setText(postcode)
+
+    def __set_combo_box(self, text_value, combo_box):
+        x = 0
+        while x in xrange(combo_box.count()):
+            text = str(combo_box.itemText(x))
+            if text == text_value:
+                combo_box.setCurrentIndex(x)
+            x += 1
+
+    def refresh_journey_ui(self):
+        departing_station = self.journey.get_depart_station()
+        self.__set_combo_box(departing_station, self.ui.departingStationCombo)
+
+        arriving_station = self.journey.get_arriving_station()
+        self.__set_combo_box(arriving_station, self.ui.arrivingStationCombo)
+
+        departure_hour = self.journey.get_start_time_hour()
+        self.__set_combo_box(departure_hour, self.ui.departureHourCombo)
+
+        departure_min = self.journey.get_start_time_min()
+        self.__set_combo_box(departure_min, self.ui.departureMinCombo)
+
+        arrival_hour = self.journey.get_end_time_hour()
+        self.__set_combo_box(arrival_hour, self.ui.arrivalHour_Combo)
+
+        arrival_min = self.journey.get_end_time_min()
+        self.____set_combo_box(arrival_min, self.ui.arrivalMin_Combo)
+
 
     def set_user_title(self):
         title = self.ui.titleComboBox.currentText()
