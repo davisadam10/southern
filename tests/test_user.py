@@ -36,7 +36,7 @@ class test_User(TestCase):
         self.assertEquals(expected_email, user_email)
 
     def test_phone_number(self):
-        expected_phone_num = 07756134612
+        expected_phone_num = "07756134612"
         self.user.set_phone_number(expected_phone_num)
         user_phone_number = self.user.get_phone_number()
         self.assertEquals(expected_phone_num, user_phone_number)
