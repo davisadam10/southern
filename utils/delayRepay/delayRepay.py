@@ -392,7 +392,7 @@ class MainUI(QtGui.QMainWindow):
         self.ticket.set_ticket_end_date(int(day), int(month), int(year))
 
     def browse_for_photo(self):
-        file_name = QtGui.QFileDialog.getOpenFileName( self, "Load Settings", "/home/adam", "*jpg", "*jpg")
+        file_name = QtGui.QFileDialog.getOpenFileName( self, "Load Settings", "/home/adam", "*jpeg", "*jpeg")
         if file_name:
             self.ui.photopathLineEdit.setText(str(file_name))
             self.ticket.set_ticket_photo_path(str(file_name))

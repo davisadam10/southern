@@ -2,22 +2,26 @@ __author__ = 'adam'
 import mechanize
 import pickle
 
+
 def load_setting(file_path):
     tmp_file = open(file_path, 'r')
     settings = pickle.load(tmp_file)
     tmp_file.close()
     return settings
 
+
 def complete_form( user, journey, ticket, delay, debug=True):
-    browser = mechanize.Browser()
+    br = mechanize.Browser()
     url = 'http://www.southernrailway.com/your-journey/customer-services/delay-repay/delay-repay-form'
-    browser.open(url)
+    br.open(url)
 
     forms = []
-    for form in browser.forms():
+
+    for form in br.forms():
         forms.append(form)
 
     main_form = forms[4]
+    br.form = list(br.forms())[4]
 
     main_form['title'] = [user.get_title(), ]
     main_form['forename'] = user.get_forename()
@@ -66,7 +70,7 @@ def complete_form( user, journey, ticket, delay, debug=True):
     main_form['photocard_id_1'] = user.get_photocard_id()
 
     if not debug:
-        response = browser.submit()
+        response = br.submit()
         text = response.read()
         temp_file = open("/home/adam/temp.html", "w")
         temp_file.write(text)

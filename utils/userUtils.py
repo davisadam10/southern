@@ -73,7 +73,7 @@ class User(SouthernBase):
 
         :param phone_number:
         """
-        self.__phoneNum = phone_number
+        self.__phoneNum = str(phone_number)
 
     def get_phone_number(self):
         """
@@ -81,7 +81,7 @@ class User(SouthernBase):
 
         :return:
         """
-        return self.__phoneNum
+        return str(self.__phoneNum)
 
     def set_address1(self, address):
         """
