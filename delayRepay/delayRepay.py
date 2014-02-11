@@ -21,6 +21,7 @@ class MainUI(QtGui.QMainWindow):
         self.journey = Journey()
         self.ticket = Ticket()
         self.delay = Delay()
+        self.home_dir = str(QtCore.QDir().home().absolutePath())
 
         #Setup combo box values
         self.__populate_combo(self.ui.arrivalHour_Combo, 24)
@@ -146,7 +147,7 @@ class MainUI(QtGui.QMainWindow):
             QtGui.QMessageBox.critical( self, 'Error: Incomplete Form', "\n".join(errors))
             return
 
-        file_name = QtGui.QFileDialog.getSaveFileName( self, "Save Settings", "/home/adam", "*%s"%(file_type), "*%s"%(file_type))
+        file_name = QtGui.QFileDialog.getSaveFileName( self, "Save Settings", self.home_dir, "*%s"%(file_type), "*%s"%(file_type))
         if file_name:
             file_name = str(file_name)
             if not file_name.endswith(file_type):
@@ -184,7 +185,7 @@ class MainUI(QtGui.QMainWindow):
         self.refresh_delay_ui()
 
     def __load_settings(self, file_type):
-        file_name = QtGui.QFileDialog.getOpenFileName( self, "Load Settings", "/home/adam", "*%s"%(file_type), "*%s"%(file_type))
+        file_name = QtGui.QFileDialog.getOpenFileName( self, "Load Settings", self.home_dir, "*%s"%(file_type), "*%s"%(file_type))
         if file_name:
             return delayRepayUtils.load_setting(file_name)
 
@@ -392,7 +393,7 @@ class MainUI(QtGui.QMainWindow):
         self.ticket.set_ticket_end_date(int(day), int(month), int(year))
 
     def browse_for_photo(self):
-        file_name = QtGui.QFileDialog.getOpenFileName( self, "Load Settings", "/home/adam", "*jpeg", "*jpeg")
+        file_name = QtGui.QFileDialog.getOpenFileName( self, "Load Settings", self.home_dir, "*jpeg", "*jpeg")
         if file_name:
             self.ui.photopathLineEdit.setText(str(file_name))
             self.ticket.set_ticket_photo_path(str(file_name))
