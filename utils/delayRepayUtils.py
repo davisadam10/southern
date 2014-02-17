@@ -33,7 +33,7 @@ def complete_form( user, journey, ticket, delay, debug=True):
     main_form['address2'] = user.get_address2()
     main_form['city'] = user.get_city()
     main_form['county'] = user.get_county()
-    main_form['postcode'] = user.get_county()
+    main_form['postcode'] = user.get_postcode()
 
     main_form['ticket_type_1'] = [ticket.get_ticket_type(), ]
 
