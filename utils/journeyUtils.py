@@ -20,7 +20,8 @@ class Journey(SouthernBase):
         self.__end_time_hour = None
         self.__end_time_min = None
 
-        self.__validStations = ['Merstham',
+        self.__validStations = ["Earlswood (Surrey)",
+                                'Merstham',
                                 'London Victoria',
                                 'London Bridge',
                                 'East Croydon']
